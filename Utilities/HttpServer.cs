@@ -66,6 +66,8 @@ namespace OpenHardwareMonitor.Utilities {
           listenerThread = new Thread(HandleRequests);
           listenerThread.Start();
         }
+        //listenerThread = new Thread(HandleRequests);
+        //listenerThread.Start();
       } catch (Exception) {
         return false;
       }
@@ -78,9 +80,13 @@ namespace OpenHardwareMonitor.Utilities {
         return false;
 
       try {
-        listenerThread.Abort();
-        listener.Stop();
-        listenerThread = null;
+        if (listenerThread != null)
+                {
+          listenerThread.Abort();
+          listener.Stop();
+          listenerThread = null;
+        }
+       
       } catch (HttpListenerException) {
       } catch (ThreadAbortException) {
       } catch (NullReferenceException) {
